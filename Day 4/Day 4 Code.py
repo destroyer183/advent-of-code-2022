@@ -35,23 +35,23 @@ with open("input.txt", "r") as reader:
             while x == int(x):
                   x = str(x)
 
-            x = recall
+                  x = recall
 
-            try:
-                  if x[y] == "-" or x[y] == ",": 
-                        y += 1
-                        rangenum += 1
-            except IndexError: break
+                  try:
+                        if x[y] == "-" or x[y] == ",": 
+                              y += 1
+                              rangenum += 1
+                  except IndexError: break
 
-            if rangenum == 0  : x1 += x[y]
-            elif rangenum == 1: y1 += x[y]
-            elif rangenum == 2: x2 += x[y]
-            elif rangenum == 3: y2 += x[y]
+                  if rangenum == 0  : x1 += x[y]
+                  elif rangenum == 1: y1 += x[y]
+                  elif rangenum == 2: x2 += x[y]
+                  elif rangenum == 3: y2 += x[y]
 
-            if rangenum == 4: break
+                  if rangenum == 4: break
 
-            x = int(x[y])
-            y += 1
+                  x = int(x[y])
+                  y += 1
 
       if int(x1) <= int(x2) and int(y1) >= int(y2):
             count += 1
@@ -66,7 +66,9 @@ with open("input.txt", "r") as reader:
       print(y1)
       print(x2)
       print(y2)
-      print(problem)
+      try:
+            print(problem)
+      except:pass
       problem = False
 
 print(count)

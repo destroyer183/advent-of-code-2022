@@ -71,7 +71,9 @@ with open("input.txt", "r") as reader:
    print(y1)
    print(x2)
    print(y2)
-   print(problem)
+   try:
+      print(problem)
+   except:pass
    problem = False
 
 print(count)

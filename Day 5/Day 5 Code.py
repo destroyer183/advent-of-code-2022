@@ -1,14 +1,14 @@
 # rearrange the array so that each vertical grid line is a horizontal line with just the letters, with the top-most box at the right
 # array should look like this when rearranged properly
-# NDMQBPZ
-# CLZQMDHV
-# QHRDVFZG
-# HGDFN
-# NFQ
-# DQVZFBT
-# QMTZDVSH
-# MGFPNQ
-# BWRM
+# HRBDZFLS
+# TBMZR
+# ZLCHNS
+# SCFJ
+# PGHWRZB
+# VJZGDNMT
+# GLNWFSPQ
+# MZR
+# MCLGVRT
 
 line1 = ""
 line2 = ""
