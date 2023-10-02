@@ -10,12 +10,10 @@ class Dir:
     current_dir = base_dir
     current_dir_hist = {}
     parent_dir = current_dir
-    parent_dir_hist = {}
 
-    def __init__(self, name, dir = None, parent_dir = None, size = 0) -> None:
+    def __init__(self, name, dir = None, size = 0) -> None:
 
         self.name = name
-        self.parent_dir = parent_dir
         self.dir = dir
         self.size = size
 
