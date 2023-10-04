@@ -1,8 +1,6 @@
-
 # use a dictionary, probably nested dicts, with a class for each file
 
 # maybe store the current dir like a computer, and then use .split('/') to separate it into iterable indicies.
-
 
 class Dir:
 
@@ -11,9 +9,10 @@ class Dir:
     current_dir_hist = {}
     parent_dir = current_dir
 
-    def __init__(self, name, dir = None, size = 0) -> None:
+    def __init__(self, name, dir = None, parent_dir = None, size = 0) -> None:
 
         self.name = name
+        self.parent_dir = parent_dir
         self.dir = dir
         self.size = size
 
