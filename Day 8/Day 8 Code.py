@@ -13,11 +13,11 @@ class Forest:
 
         self.type = type
 
+        Forest.forest[self] = contents
+
         if type == 'row':
 
             self.num = Forest.row_total
-
-            Forest.forest[self] = contents
 
             Forest.row_total += 1
 
@@ -26,8 +26,6 @@ class Forest:
         if type == 'column':
 
             self.num = Forest.column_total
-
-            Forest.forest[self] = contents
 
             Forest.column_total += 1
 
@@ -58,12 +56,11 @@ with open("input.txt", "r") as reader:
 
         for i in range(len(x)):
         
-            y.append(Tree(Forest.row_total, i, x[i]))
+            y.append(Forest.row_total, i, Tree(x[i]))
         
         Forest('row', y)
 
 print('')
-
 
 for key in Forest.forest:
 
@@ -89,29 +86,7 @@ for e in x:
 
     Forest('column', e)
 
-
 print('')
-
-
-
-# for key in Forest.forest:
-
-#     temp = []
-
-#     if key.type == 'column':
-
-#         for val in Forest.forest[key]:
-
-#             temp.append(val.height)
-
-#     print(f"column: {('').join(temp)}")
-
-
-
-# the whole dict is now correctly filled, next, whether each tree is visible or not needs to be computed.
-
-count1 = 0
-
 
 for key in Forest.forest:
 
@@ -135,11 +110,7 @@ for key in Forest.forest:
             previous = Forest.forest[key][a].height
 
 
-
-
     previous = None
-
-
 
     for b in range(len(Forest.forest[key]) - 1, -1, -1):
 
