@@ -97,76 +97,53 @@ for key in Forest.forest:
     print(f"row: {('').join(temp)}")
 
 
-
-x = []
-
-for i in range(len(Forest.forest)):
-
-    x.append([x[i] for x in Forest.forest.values()])
-
-
-
-for e in x:
-
-    Forest('column', e)
-
-    temp = []
-
-    for i in e:
-
-        temp.append(i.height)
-
-    print(f"column: {('').join(temp)}")
-
-
 print('')
 
+Forest.forest = np.array([x for x in Forest.forest.values()])
 
+print(Forest.forest)
 
 
 # assume every tree shorter than current tree is visible
 
-for keys, values in Forest.forest.items():
+for rows in Forest.forest:
 
-    for index, key in enumerate(values):
+    for index, key in enumerate(rows):
 
         tree = key
 
-        if keys.type == 'row':
+        for a in range(index + 1, len(rows)):
 
-            for a in range(index + 1, len(values)):
-
-                if tree.check_height(values[a], 'east'): break
+            if tree.check_height(rows[a], 'east'): break
 
 
 
-            for b in range(index - 1, -1, -1):
+        for b in range(index - 1, -1, -1):
 
-                if tree.check_height(values[b], 'west'): break
-
-
-
-            # print(f"tree height: {tree.height}")
-            # print(f"tree index: {tree.rownum}")
-            # print(f"score: {tree.score}")
+            if tree.check_height(rows[b], 'west'): break
 
 
 
-        if keys.type == 'column':
 
-            for c in range(index + 1, len(values)):
+for rows in Forest.forest.T:
+        
+    for index, key in enumerate(rows):
 
-                if tree.check_height(values[c], 'south'): break
+        tree = key
 
+        for c in range(index + 1, len(rows)):
 
-
-            for d in range(index - 1, -1, -1):
-
-                if tree.check_height(values[d], 'north'): break
-
+            if tree.check_height(rows[c], 'south'): break
 
 
-for value in Forest.forest.values():
+
+        for d in range(index - 1, -1, -1):
+
+            if tree.check_height(rows[d], 'north'): break
+
+
+
+for value in Forest.forest:
 
     for tree in value:
 
@@ -183,7 +160,7 @@ tree_location = []
 row = ''
 column = ''
 
-for value in Forest.forest.values():
+for value in Forest.forest:
 
     for tree in value:
 
@@ -199,39 +176,9 @@ for value in Forest.forest.values():
             tree_location.append(str(tree.columnnum))
 
 
-for key in Forest.forest:
-
-    if key.type == 'row' and key.num == 61:
-
-        temp = []
-
-        for value in Forest.forest[key]:
-
-            temp.append(value.height)
-
-        row = ('').join(temp)
-
-
-    
-    if key.type == 'column' and key.num == 61:
-
-        temp = []
-
-        for value in Forest.forest[key]:
-
-            temp.append(value.height)
-
-        column = ('').join(temp)
-
-
-
-    
-
 
 print(f"max score: {max_score}")
 print(f"height: {height}")
 print(f"location: ({(', ').join(tree_location)})")
 print(f"row: {row}")
 print(f"column: {column}")
-
-

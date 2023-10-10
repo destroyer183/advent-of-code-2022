@@ -1,7 +1,6 @@
+import numpy as np
 
-
-# use a dict full of arrays to represent each row and column
-# ADD HEIGHT TO TREE CLASS
+# use numpy matrices instead of nested lists
 
 class Forest:
 
@@ -56,7 +55,7 @@ with open("input.txt", "r") as reader:
 
         for i in range(len(x)):
         
-            y.append(Forest.row_total, i, Tree(x[i]))
+            y.append(Tree(Forest.row_total, i, x[i]))
         
         Forest('row', y)
 
