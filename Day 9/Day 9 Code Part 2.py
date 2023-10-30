@@ -83,31 +83,27 @@ with open("input.txt", "r") as reader:
                 max_l = current[0]
 
 
-        # only print the current location if it is at a new max
-        if current[0] >= max_r:
 
-            print(f"current0: {current}, line: {x}, linenum: {count}")
-
-            max_current0 = current[0]
-
-
-        
-        if current[1] >= max_d: 
-            
-            print(f"current1: {current}, line: {x}, linenum: {count}")
-
-            max_current1 = current[1]
-
-
-
-class Grid:
+class Knot:
 
     grid = np.ndarray(shape=(max_r + (max_l * -1), max_d + (max_u * -1)), dtype=str)
+    previous = None
+    tails = []
+    num = 0
 
-    def __init__(self, position) -> None:
+    def __init__(self, position = [(max_l * -1), (max_u * -1)]) -> None:
 
         self.position = position
+        self.parent = Knot.previous
+        self.num = Knot.num
+        Knot.num += 1
 
+        if Knot.previous is not None: 
+
+            Knot.tails.append(self)
+
+        Knot.previous = self
+        
 
 
     def move(self, direction, distance):
@@ -119,19 +115,21 @@ class Grid:
 
         for i in range(int(distance)):
 
-            # print(f"head position: {head.position}\ntail position: {tail.position}")
-
             head.position[index] += incrament
 
-            tail.follow()
+            for item in Knot.tails:
+
+                item.follow()
 
 
 
     def follow(self):
 
-        distance = [head.position[0] - self.position[0], head.position[1] - self.position[1]]
+        # print(f"parent location: {self.parent.position}, tail location: {self.position}")
 
-        # print(f"distance: {distance}\n")
+        distance = [self.parent.position[0] - self.position[0], self.parent.position[1] - self.position[1]]
+
+        # print(f"distance: {distance}")
 
         if distance[0] > 1 or distance[0] < -1 or distance[1] > 1 or distance[1] < -1:
 
@@ -149,34 +147,48 @@ class Grid:
 
     def track(self):
 
-        print(f"position 0: {self.position[0] - 1}\nposition 1: {self.position[1] - 1}")
+        if self.num == len(Knot.tails):
 
-        Grid.grid[self.position[0] - 1, self.position[1] - 1] = '#'
+            # print(f"position 0: {self.position[0] - 1}\nposition 1: {self.position[1] - 1}")
 
-        print(f"new tile: {Grid.grid[self.position[0] - 1, self.position[1] - 1]}") # this prints a blank space, how tf does this not print #
+            Knot.grid[self.position[0] - 1, self.position[1] - 1] = '#'
 
+            # print(f"new tile: {Knot.grid[self.position[0] - 1, self.position[1] - 1]}") # this prints a blank space, how tf does this not print #
 
+        
 
-Grid.grid = np.array([x for x in Grid.grid])
+Knot.grid = np.array([x for x in Knot.grid])
 
-Grid.grid[(max_l * -1), (max_u * -1)] = 's'
-
-
-head = Grid([(max_l * -1), (max_u * -1)])
-tail = Grid([(max_l * -1), (max_u * -1)])
+Knot.grid[(max_l * -1), (max_u * -1)] = 's'
 
 
-print(f"grid:\n{Grid.grid}\nshape: {Grid.grid.shape}\n")
+
+head = Knot([(max_l * -1), (max_u * -1)])
+
+for i in range(9):
+
+    Knot([(max_l * -1), (max_u * -1)])
+
+
+
+print(f"grid:\n{Knot.grid}\nshape: {Knot.grid.shape}\n")
 
 print(f"max u: {max_u}\nmax r: {max_r}\nmax d: {max_d}\nmax l: {max_l}\n")
 
 print(f"total u: {total_u}\ntotal r: {total_r}\ntotal d: {total_d}\ntotal l: {total_l}\n")
 
-print(f"shape: {Grid.grid.shape}")
+print(f"shape: {Knot.grid.shape}")
 
 print(f"current: {current}")
 
-print(f"max current 0: {max_current0}\nmax current 1: {max_current1}")
+print(f"number of knots: {len(Knot.tails)}")
+
+
+
+
+# maybe set the number of knots to 2, and then print a grid of the knot locations at each step to make sure they are all moving correctly.
+
+
 
 
 count = 0
@@ -191,11 +203,9 @@ with open("input.txt", "r") as read:
         
         x = x.split(" ")
 
-        print(f"line: {x}")
+        # print(f"line: {x}")
 
         head.move(x[0], x[1])
-
-
 
 print(f"count: {count}")
 
@@ -203,7 +213,7 @@ print(f"count: {count}")
 
 count = 1
 
-for item in np.nditer(Grid.grid):
+for item in np.nditer(Knot.grid):
 
     if item == '#': count += 1
 
