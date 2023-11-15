@@ -83,26 +83,10 @@ with open("input.txt", "r") as reader:
                 max_l = current[0]
 
 
-        # only print the current location if it is at a new max
-        if current[0] >= max_r:
 
-            print(f"current0: {current}, line: {x}, linenum: {count}")
+class Knot:
 
-            max_current0 = current[0]
-
-
-        
-        if current[1] >= max_d: 
-            
-            print(f"current1: {current}, line: {x}, linenum: {count}")
-
-            max_current1 = current[1]
-
-
-
-class Grid:
-
-    grid = np.ndarray(shape=(max_r + (max_l * -1), max_d + (max_u * -1)), dtype=str)
+    grid = np.ndarray(shape=(max_d + (max_u * -1), max_r + (max_l * -1)), dtype=str)
 
     def __init__(self, position) -> None:
 
@@ -112,10 +96,10 @@ class Grid:
 
     def move(self, direction, distance):
 
-        if direction == 'U': index = 1; incrament = -1
-        if direction == 'R': index = 0; incrament = 1
-        if direction == 'D': index = 1; incrament = 1
-        if direction == 'L': index = 0; incrament = -1
+        if direction == 'U': index = 0; incrament = -1
+        if direction == 'R': index = 1; incrament = 1
+        if direction == 'D': index = 0; incrament = 1
+        if direction == 'L': index = 1; incrament = -1
 
         for i in range(int(distance)):
 
@@ -149,30 +133,26 @@ class Grid:
 
     def track(self):
 
-        print(f"position 0: {self.position[0] - 1}\nposition 1: {self.position[1] - 1}")
-
-        Grid.grid[self.position[0] - 1, self.position[1] - 1] = '#'
-
-        print(f"new tile: {Grid.grid[self.position[0] - 1, self.position[1] - 1]}") # this prints a blank space, how tf does this not print #
+        Knot.grid[self.position[0] - 1, self.position[1] - 1] = '#'
 
 
 
-Grid.grid = np.array([x for x in Grid.grid])
+Knot.grid = np.array([x for x in Knot.grid])
 
-Grid.grid[(max_l * -1), (max_u * -1)] = 's'
-
-
-head = Grid([(max_l * -1), (max_u * -1)])
-tail = Grid([(max_l * -1), (max_u * -1)])
+Knot.grid[(max_u * -1), (max_l * -1)] = 's'
 
 
-print(f"grid:\n{Grid.grid}\nshape: {Grid.grid.shape}\n")
+head = Knot([(max_u * -1), (max_l * -1)])
+tail = Knot([(max_u * -1), (max_l * -1)])
+
+
+print(f"grid:\n{Knot.grid}\nshape: {Knot.grid.shape}\n")
 
 print(f"max u: {max_u}\nmax r: {max_r}\nmax d: {max_d}\nmax l: {max_l}\n")
 
 print(f"total u: {total_u}\ntotal r: {total_r}\ntotal d: {total_d}\ntotal l: {total_l}\n")
 
-print(f"shape: {Grid.grid.shape}")
+print(f"shape: {Knot.grid.shape}")
 
 print(f"current: {current}")
 
@@ -203,7 +183,7 @@ print(f"count: {count}")
 
 count = 1
 
-for item in np.nditer(Grid.grid):
+for item in np.nditer(Knot.grid):
 
     if item == '#': count += 1
 
